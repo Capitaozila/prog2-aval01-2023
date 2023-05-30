@@ -7,23 +7,22 @@ void main() {
   final csvData = CSVData();
 
   // Carregando dados de um arquivo CSV
-  csvData.load('./lib/dados/csv/data01.csv');
+  csvData.load('./lib/dados/json/data01.json');
 
-  // Obtendo os nomes dos campos
+  // Obtém os campos do arquivo CSV
   final csvFields = csvData.fields;
   print('CSV Fields: $csvFields');
 
-  // Verificando se existem dados carregados
+  // Verificando se existem dados no arquivo CSV
   print('CSV hasData: ${csvData.hasData}');
 
-  // Obtendo os dados armazenados
+  // Obtendo os dados do arquivo CSV  (se existirem)
   final csvDataContent = csvData.data;
   print('CSV dados armazenados:\n$csvDataContent');
 
-  // Salvando os dados em um novo arquivo CSV
+  // salva os dados no arquivo CSV (se existirem)
   csvData.save('./lib/dados/newdate/new_data.csv');
 
-  // Limpando os dados
-  csvData.clear();
+  // Limpa os dados do arquivo CSV (se existirem)
   print('CSV hasData: ${csvData.hasData}');
 }
