@@ -5,16 +5,24 @@ class CSVData implements DelimitedData {
 
   @override
   void load(String fileName) {
-    final file = File(fileName);
-    final lines = file.readAsLinesSync();
-    _data = lines.map((line) => line.split(delimiter)).toList();
+    try {
+      final file = File(fileName);
+      final lines = file.readAsLinesSync();
+      _data = lines.map((line) => line.split(delimiter)).toList();
+    } catch (e) {
+      throw InvalidDataFormatException('Failed to load data from file: $e');
+    }
   }
 
   @override
   void save(String fileName) {
-    final file = File(fileName);
-    final lines = _data.map((row) => row.join(delimiter)).toList();
-    file.writeAsStringSync(lines.join('\n'));
+    try {
+      final file = File(fileName);
+      final lines = _data.map((row) => row.join(delimiter)).toList();
+      file.writeAsStringSync(lines.join('\n'));
+    } catch (e) {
+      throw InvalidDataFormatException('Failed to save data to file: $e');
+    }
   }
 
   @override
@@ -30,16 +38,12 @@ class CSVData implements DelimitedData {
 
   @override
   set data(String data) {
-    final rows = data.split('\n');
-    if (rows.isNotEmpty) {
-      final firstRow = rows[0];
-      final fields = firstRow.split(delimiter);
-      if (fields.isNotEmpty) {
-        _data = rows.map((row) => row.split(delimiter)).toList();
-        return;
-      }
+    try {
+      final rows = data.split('\n');
+      _data = rows.map((row) => row.split(delimiter)).toList();
+    } catch (e) {
+      throw InvalidDataFormatException('Invalid data format: $e');
     }
-    throw InvalidDataFormatException('Invalid data format');
   }
 
   @override
