@@ -5,16 +5,24 @@ class XMLData implements Data {
 
   @override
   void load(String fileName) {
-    final file = File(fileName);
-    final xmlString = file.readAsStringSync();
-    _data = XmlDocument.parse(xmlString);
+    try {
+      final file = File(fileName);
+      final xmlString = file.readAsStringSync();
+      _data = XmlDocument.parse(xmlString);
+    } catch (e) {
+      throw InvalidDataFormatException('Failed to load XML data: $e');
+    }
   }
 
   @override
   void save(String fileName) {
-    final file = File(fileName);
-    final xmlString = _data.toXmlString(pretty: true);
-    file.writeAsStringSync(xmlString);
+    try {
+      final file = File(fileName);
+      final xmlString = _data.toXmlString(pretty: true);
+      file.writeAsStringSync(xmlString);
+    } catch (e) {
+      throw InvalidDataFormatException('Failed to save XML data: $e');
+    }
   }
 
   @override
@@ -33,19 +41,16 @@ class XMLData implements Data {
     try {
       _data = XmlDocument.parse(data);
     } catch (e) {
-      throw InvalidDataFormatException('Invalid data format');
+      throw InvalidDataFormatException('Invalid XML data format: $e');
     }
   }
 
   @override
   List<String> get fields {
-    if (_data.children.isNotEmpty) {
-      final firstElement = _data.children.whereType<XmlElement>().first;
-      return firstElement.children
-          .whereType<XmlElement>()
-          .map((child) => child.getAttribute('name') ?? '')
-          .toList();
-    }
-    return [];
+  if (_data.children.isNotEmpty) {
+    final firstElement = _data.children.whereType<XmlElement>().first;
+    return firstElement.attributes.map((attr) => attr.name.qualified).toList();
   }
+  return [];
+}
 }
