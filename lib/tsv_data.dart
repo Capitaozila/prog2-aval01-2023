@@ -8,7 +8,7 @@ class TSVData implements DelimitedData {
     try {
       final file = File(fileName);
       final lines = file.readAsLinesSync();
-      _data = lines.map((line) => line.split(separator)).toList();
+      _data = lines.map((line) => line.split(delimiter)).toList();
     } catch (e) {
       throw InvalidDataFormatException('Failed to load TSV data: $e');
     }
@@ -18,7 +18,7 @@ class TSVData implements DelimitedData {
   void save(String fileName) {
     try {
       final file = File(fileName);
-      final lines = _data.map((row) => row.join(separator)).toList();
+      final lines = _data.map((row) => row.join(delimiter)).toList();
       file.writeAsStringSync(lines.join('\n'));
     } catch (e) {
       throw InvalidDataFormatException('Failed to save TSV data: $e');
@@ -34,7 +34,7 @@ class TSVData implements DelimitedData {
   bool get hasData => _data.isNotEmpty;
 
   @override
-  String get data => _data.map((row) => row.join(separator)).join('\n');
+  String get data => _data.map((row) => row.join(delimiter)).join('\n');
 
   @override
   set data(String data) {
@@ -42,9 +42,9 @@ class TSVData implements DelimitedData {
       final rows = data.split('\n');
       if (rows.isNotEmpty) {
         final firstRow = rows[0];
-        final fields = firstRow.split(separator);
+        final fields = firstRow.split(delimiter);
         if (fields.isNotEmpty) {
-          _data = rows.map((row) => row.split(separator)).toList();
+          _data = rows.map((row) => row.split(delimiter)).toList();
           return;
         }
       }
@@ -63,6 +63,6 @@ class TSVData implements DelimitedData {
   }
 
   @override
-  String get separator => '\t';
+  String get delimiter => '\t';
 }
 
