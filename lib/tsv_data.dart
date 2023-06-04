@@ -1,6 +1,6 @@
 import 'imports.dart';
 
-class TSVData implements DelimitedData {
+class TsvData implements DelimitedData {
   List<List<String>> _data = [];
 
   @override
@@ -65,4 +65,3 @@ class TSVData implements DelimitedData {
   @override
   String get delimiter => '\t';
 }
-

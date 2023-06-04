@@ -1,6 +1,6 @@
 import 'imports.dart';
 
-class XMLData implements Data {
+class XmlData implements Data {
   XmlDocument _data = XmlDocument();
 
   @override
@@ -47,10 +47,12 @@ class XMLData implements Data {
 
   @override
   List<String> get fields {
-  if (_data.children.isNotEmpty) {
-    final firstElement = _data.children.whereType<XmlElement>().first;
-    return firstElement.attributes.map((attr) => attr.name.qualified).toList();
+    if (_data.children.isNotEmpty) {
+      final firstElement = _data.children.whereType<XmlElement>().first;
+      return firstElement.attributes
+          .map((attr) => attr.name.qualified)
+          .toList();
+    }
+    return [];
   }
-  return [];
-}
 }

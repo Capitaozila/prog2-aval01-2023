@@ -1,6 +1,6 @@
 import './imports.dart';
 
-class CSVData implements DelimitedData {
+class CsvData implements DelimitedData {
   List<List<String>> _data = [];
 
   @override

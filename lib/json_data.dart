@@ -1,6 +1,6 @@
 import 'imports.dart';
 
-class JSONData implements Data {
+class JsonData implements Data {
   List<Map<String, dynamic>> _data = [];
 
   @override
