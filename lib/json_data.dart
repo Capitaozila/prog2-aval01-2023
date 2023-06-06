@@ -51,7 +51,9 @@ class JsonData implements Data {
   @override
   List<String> get fields {
     if (_data.isNotEmpty) {
-      return _data.first.keys.toList();
+      final uniqueFields =
+          _data.expand((record) => record.keys).toSet().toList();
+      return uniqueFields;
     }
     return [];
   }

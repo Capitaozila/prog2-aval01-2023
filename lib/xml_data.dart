@@ -47,9 +47,13 @@ class XmlData implements Data {
 
   @override
   List<String> get fields {
-    if (_data.children.isNotEmpty) {
-      final firstElement = _data.children.whereType<XmlElement>().first;
-      return firstElement.attributes
+    final rootElement = _data.rootElement;
+    final children = rootElement.children;
+    if (children.isNotEmpty) {
+      return children
+          .whereType<XmlElement>()
+          .first
+          .attributes
           .map((attr) => attr.name.qualified)
           .toList();
     }
